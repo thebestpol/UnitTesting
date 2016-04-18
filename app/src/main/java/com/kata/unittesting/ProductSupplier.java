@@ -9,7 +9,7 @@ public class ProductSupplier {
 
     public static final Product BEER = new Product(1, 2, Product.Type.COLD);
 
-    public static final Product COFFEE = new Product(2, 2, Product.Type.HOT);
+    public static final Product COFFEE = new Product(2, 1.25, Product.Type.HOT);
 
     public static final Product CHIPS = new Product(3, 1.75, Product.Type.COLD);
 
