@@ -8,14 +8,6 @@ import java.util.List;
  */
 public class ProductSupplier {
 
-    public static final Product COFFEE = new Product(2, 1.25, Product.Type.HOT);
-
-    public static final Product CHIPS = new Product(3, 1.75, Product.Type.COLD);
-
-    public static final Product SANDWICH = new Product(4, 2.25, Product.Type.COLD);
-
-    public static final Product PIZZA = new Product(5, 4.5, Product.Type.HOT);
-
     public static Product getCola() {
         return new Product(0, 1.5, Product.Type.COLD);
     }
@@ -40,5 +32,57 @@ public class ProductSupplier {
         }
 
         return beers;
+    }
+
+    public static Product getCoffee() {
+        return new Product(2, 1.25, Product.Type.HOT);
+    }
+
+    public static List<Product> getCoffees(int quantity) {
+        List<Product> coffees = new ArrayList<>();
+        for (int i = 0; i < quantity; i++) {
+            coffees.add(new Product(2, 1.25, Product.Type.HOT));
+        }
+
+        return coffees;
+    }
+
+    public static Product getChips() {
+        return new Product(3, 1.75, Product.Type.COLD);
+    }
+
+    public static List<Product> getChips(int quantity) {
+        List<Product> chips = new ArrayList<>();
+        for (int i = 0; i < quantity; i++) {
+            chips.add(new Product(3, 1.75, Product.Type.COLD));
+        }
+
+        return chips;
+    }
+
+    public static Product getSandwich() {
+        return new Product(4, 2.25, Product.Type.COLD);
+    }
+
+    public static List<Product> getSandwiches(int quantity) {
+        List<Product> sandwiches = new ArrayList<>();
+        for (int i = 0; i < quantity; i++) {
+            sandwiches.add(new Product(4, 2.25, Product.Type.COLD));
+        }
+
+        return sandwiches;
+    }
+
+    public static Product getPizza() {
+        return new Product(5, 4.5, Product.Type.HOT);
+    }
+
+    public static List getPizzas(int quantity) {
+        List<Product> pizzas = new ArrayList<>();
+        for (int i = 0; i < quantity; i++) {
+            pizzas.add(new Product(5, 4.5, Product.Type.HOT));
+        }
+
+        return pizzas;
     }
 }
