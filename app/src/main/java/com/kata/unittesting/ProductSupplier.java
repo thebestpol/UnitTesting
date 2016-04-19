@@ -16,4 +16,6 @@ public class ProductSupplier {
     public static final Product SANDWICH = new Product(4, 2.25, Product.Type.COLD);
 
     public static final Product PIZZA = new Product(5, 4.5, Product.Type.HOT);
+
+    //FIXME Modify this class to be a supplier 
 }
