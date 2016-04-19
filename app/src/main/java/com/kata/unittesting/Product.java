@@ -17,6 +17,9 @@ public class Product {
 
     Type type;
 
+    public Product() {
+    }
+
     public Product(int id, double price, Type type) {
         this.id = id;
         this.price = price;
