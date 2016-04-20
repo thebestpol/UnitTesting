@@ -1,5 +1,6 @@
 package com.kata.unittesting;
 
+import com.kata.unittesting.promotion.SadPartyPromotionApplicator;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -64,5 +65,40 @@ public class SalesOperativeTest {
         double amount = ShoppingCalculator.processBasket(basket);
 
         assertEquals(MOCK_AMOUNT * MOCK_PRODUCTS_SIZE, amount, DELTA);
+    }
+
+    @Test
+    public void shouldShoppingCalculatorApplySadPartyPromotion() {
+        List<Product> mockProducts = ProductSupplier.getColas(SadPartyPromotionApplicator.PROMOTION_COLA_QUANTITY);
+        mockProducts.addAll(ProductSupplier.getChips(SadPartyPromotionApplicator.PROMOTION_CHIPS_QUANTITY));
+        Basket mockBasket = new Basket(mockProducts);
+
+        double amount = ShoppingCalculator.processBasket(mockBasket);
+
+        assertEquals(SadPartyPromotionApplicator.PROMOTION_AMOUNT, amount, DELTA);
+    }
+
+    @Test
+    public void shouldShoppingCalculatorApplySadPartyPromotions() {
+        List<Product> mockProducts = ProductSupplier.getColas(SadPartyPromotionApplicator.PROMOTION_COLA_QUANTITY * 2);
+        mockProducts.addAll(ProductSupplier.getChips(SadPartyPromotionApplicator.PROMOTION_CHIPS_QUANTITY * 2));
+        Basket mockBasket = new Basket(mockProducts);
+
+        double amount = ShoppingCalculator.processBasket(mockBasket);
+
+        assertEquals(SadPartyPromotionApplicator.PROMOTION_AMOUNT * 2, amount, DELTA);
+    }
+
+    @Test
+    public void shouldShoppingCalculatorProcessBasketAndApplySadPartyPromotion() {
+        List<Product> mockProducts = ProductSupplier.getColas(4);
+        mockProducts.addAll(ProductSupplier.getChips(2));
+        Product mockProduct = new Product(0, MOCK_AMOUNT, Product.Type.HOT);
+        mockProducts.add(mockProduct);
+        Basket mockBasket = new Basket(mockProducts);
+
+        double amount = ShoppingCalculator.processBasket(mockBasket);
+
+        assertEquals(SadPartyPromotionApplicator.PROMOTION_AMOUNT + MOCK_AMOUNT, amount, DELTA);
     }
 }
