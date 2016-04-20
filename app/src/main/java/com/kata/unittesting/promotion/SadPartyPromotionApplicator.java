@@ -23,19 +23,13 @@ public class SadPartyPromotionApplicator extends PromotionApplicator {
 
     @Override
     public boolean process() {
-
         Product cola = ProductSupplier.getCola();
         Product chips = ProductSupplier.getChips();
 
         if (Collections.frequency(products, cola) >= PROMOTION_COLA_QUANTITY
                 && Collections.frequency(products, chips) >= PROMOTION_CHIPS_QUANTITY) {
-            for (int i = 0; i < PROMOTION_CHIPS_QUANTITY; i++) {
-                products.remove(chips);
-            }
-
-            for (int i = 0; i < PROMOTION_COLA_QUANTITY; i++) {
-                products.remove(cola);
-            }
+            removeProducts(cola, PROMOTION_COLA_QUANTITY);
+            removeProducts(chips, PROMOTION_CHIPS_QUANTITY);
 
             return true;
         }

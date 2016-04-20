@@ -22,4 +22,10 @@ public abstract class PromotionApplicator {
     public List<Product> getProducts() {
         return products;
     }
+
+    protected void removeProducts(Product productToRemove, int quantityToRemove) {
+        for (int i = 0; i < quantityToRemove; i++) {
+            products.remove(productToRemove);
+        }
+    }
 }

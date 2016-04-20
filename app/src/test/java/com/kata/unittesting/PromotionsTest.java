@@ -1,5 +1,7 @@
 package com.kata.unittesting;
 
+import com.kata.unittesting.promotion.PartyPizzaPromotionApplicator;
+import com.kata.unittesting.promotion.PromotionApplicator;
 import com.kata.unittesting.promotion.SadPartyPromotionApplicator;
 
 import org.junit.Test;
@@ -22,7 +24,7 @@ public class PromotionsTest {
         List<Product> products = ProductSupplier.getColas(SadPartyPromotionApplicator.PROMOTION_COLA_QUANTITY);
         products.addAll(ProductSupplier.getChips(SadPartyPromotionApplicator.PROMOTION_CHIPS_QUANTITY));
 
-        SadPartyPromotionApplicator sadPartyPromotionApplicator = new SadPartyPromotionApplicator(products);
+        PromotionApplicator sadPartyPromotionApplicator = new SadPartyPromotionApplicator(products);
 
         assertTrue(sadPartyPromotionApplicator.process());
     }
@@ -32,7 +34,7 @@ public class PromotionsTest {
         List<Product> products = ProductSupplier.getColas(SadPartyPromotionApplicator.PROMOTION_COLA_QUANTITY);
         products.addAll(ProductSupplier.getChips(SadPartyPromotionApplicator.PROMOTION_CHIPS_QUANTITY - 1));
 
-        SadPartyPromotionApplicator sadPartyPromotionApplicator = new SadPartyPromotionApplicator(products);
+        PromotionApplicator sadPartyPromotionApplicator = new SadPartyPromotionApplicator(products);
 
         assertFalse(sadPartyPromotionApplicator.process());
     }
@@ -40,14 +42,49 @@ public class PromotionsTest {
     @Test
     public void shouldSadPartyPromotionApplicatorReturnNotPromotionProducts() {
         List<Product> products = ProductSupplier.getColas(SadPartyPromotionApplicator.PROMOTION_COLA_QUANTITY);
-        products.addAll(ProductSupplier.getChips(2));
+        products.addAll(ProductSupplier.getChips(SadPartyPromotionApplicator.PROMOTION_CHIPS_QUANTITY));
         Product mockProduct = new Product();
         products.add(mockProduct);
 
-        SadPartyPromotionApplicator sadPartyPromotionApplicator = new SadPartyPromotionApplicator(products);
+        PromotionApplicator sadPartyPromotionApplicator = new SadPartyPromotionApplicator(products);
         sadPartyPromotionApplicator.process();
 
         assertEquals(1, sadPartyPromotionApplicator.getProducts().size());
         assertEquals(mockProduct, sadPartyPromotionApplicator.getProducts().get(0));
+    }
+
+
+    @Test
+    public void shouldPartyPizzaPromotionApplicatorReturnTrueWhenApplyPromotion() {
+        List<Product> products = ProductSupplier.getBeers(PartyPizzaPromotionApplicator.PROMOTION_BEER_QUANTITY);
+        products.addAll(ProductSupplier.getPizzas(PartyPizzaPromotionApplicator.PROMOTION_PIZZA_QUANTITY));
+
+        PartyPizzaPromotionApplicator partyPizzaPromotionApplicator = new PartyPizzaPromotionApplicator(products);
+
+        assertTrue(partyPizzaPromotionApplicator.process());
+    }
+
+    @Test
+    public void shouldPartyPizzaPromotionApplicatorReturnFalseWhenCanNotApplyPromotion() {
+        List<Product> products = ProductSupplier.getBeers(PartyPizzaPromotionApplicator.PROMOTION_BEER_QUANTITY - 1);
+        products.addAll(ProductSupplier.getPizzas(PartyPizzaPromotionApplicator.PROMOTION_PIZZA_QUANTITY));
+
+        PromotionApplicator partyPizzaPromotionApplicator = new PartyPizzaPromotionApplicator(products);
+
+        assertFalse(partyPizzaPromotionApplicator.process());
+    }
+
+    @Test
+    public void shouldpartyPizzsaPromotionApplicatorReturnNotPromotionProducts() {
+        List<Product> products = ProductSupplier.getBeers(PartyPizzaPromotionApplicator.PROMOTION_BEER_QUANTITY);
+        products.addAll(ProductSupplier.getPizzas(PartyPizzaPromotionApplicator.PROMOTION_PIZZA_QUANTITY));
+        Product mockProduct = new Product();
+        products.add(mockProduct);
+
+        PromotionApplicator partyPizzaPromotionApplicator = new PartyPizzaPromotionApplicator(products);
+        partyPizzaPromotionApplicator.process();
+
+        assertEquals(1, partyPizzaPromotionApplicator.getProducts().size());
+        assertEquals(mockProduct, partyPizzaPromotionApplicator.getProducts().get(0));
     }
 }

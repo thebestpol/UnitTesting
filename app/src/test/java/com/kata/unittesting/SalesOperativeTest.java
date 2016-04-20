@@ -1,5 +1,6 @@
 package com.kata.unittesting;
 
+import com.kata.unittesting.promotion.PartyPizzaPromotionApplicator;
 import com.kata.unittesting.promotion.SadPartyPromotionApplicator;
 
 import org.junit.Rule;
@@ -100,5 +101,40 @@ public class SalesOperativeTest {
         double amount = ShoppingCalculator.processBasket(mockBasket);
 
         assertEquals(SadPartyPromotionApplicator.PROMOTION_AMOUNT + MOCK_AMOUNT, amount, DELTA);
+    }
+
+    @Test
+    public void shouldShoppingCalculatorApplyPartyPizzaPromotion() {
+        List<Product> mockProducts = ProductSupplier.getBeers(PartyPizzaPromotionApplicator.PROMOTION_BEER_QUANTITY);
+        mockProducts.addAll(ProductSupplier.getPizzas(PartyPizzaPromotionApplicator.PROMOTION_PIZZA_QUANTITY));
+        Basket mockBasket = new Basket(mockProducts);
+
+        double amount = ShoppingCalculator.processBasket(mockBasket);
+
+        assertEquals(PartyPizzaPromotionApplicator.PROMOTION_AMOUNT, amount, DELTA);
+    }
+
+    @Test
+    public void shouldShoppingCalculatorApplyPartyPizzaPromotions() {
+        List<Product> mockProducts = ProductSupplier.getBeers(PartyPizzaPromotionApplicator.PROMOTION_BEER_QUANTITY * 2);
+        mockProducts.addAll(ProductSupplier.getPizzas(PartyPizzaPromotionApplicator.PROMOTION_PIZZA_QUANTITY * 2));
+        Basket mockBasket = new Basket(mockProducts);
+
+        double amount = ShoppingCalculator.processBasket(mockBasket);
+
+        assertEquals(PartyPizzaPromotionApplicator.PROMOTION_AMOUNT * 2, amount, DELTA);
+    }
+
+    @Test
+    public void shouldShoppingCalculatorProcessBasketAndApplypartyPizzaPromotion() {
+        List<Product> mockProducts = ProductSupplier.getBeers(PartyPizzaPromotionApplicator.PROMOTION_BEER_QUANTITY);
+        mockProducts.addAll(ProductSupplier.getPizzas(PartyPizzaPromotionApplicator.PROMOTION_PIZZA_QUANTITY));
+        Product mockProduct = new Product(0, MOCK_AMOUNT, Product.Type.HOT);
+        mockProducts.add(mockProduct);
+        Basket mockBasket = new Basket(mockProducts);
+
+        double amount = ShoppingCalculator.processBasket(mockBasket);
+
+        assertEquals(PartyPizzaPromotionApplicator.PROMOTION_AMOUNT + MOCK_AMOUNT, amount, DELTA);
     }
 }

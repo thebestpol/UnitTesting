@@ -1,5 +1,6 @@
 package com.kata.unittesting;
 
+import com.kata.unittesting.promotion.PartyPizzaPromotionApplicator;
 import com.kata.unittesting.promotion.SadPartyPromotionApplicator;
 
 import java.util.List;
@@ -17,12 +18,18 @@ public class ShoppingCalculator {
         }
         double amount = 0;
 
-        SadPartyPromotionApplicator applicator = new SadPartyPromotionApplicator(basket.getContent());
-        while (applicator.process()) {
-            amount += applicator.getPromotionAmount();
+        SadPartyPromotionApplicator sadPartyPromotionApplicator = new SadPartyPromotionApplicator(basket.getContent());
+        while (sadPartyPromotionApplicator.process()) {
+            amount += sadPartyPromotionApplicator.getPromotionAmount();
         }
 
-        List<Product> shoppingContent = applicator.getProducts();
+        PartyPizzaPromotionApplicator partyPizzaPromotionApplicator = new PartyPizzaPromotionApplicator(
+                sadPartyPromotionApplicator.getProducts());
+        while (partyPizzaPromotionApplicator.process()) {
+            amount += partyPizzaPromotionApplicator.getPromotionAmount();
+        }
+
+        List<Product> shoppingContent = partyPizzaPromotionApplicator.getProducts();
         for (Product product : shoppingContent) {
             amount += product.getPrice();
         }
