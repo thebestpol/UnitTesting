@@ -13,6 +13,8 @@ import static org.junit.Assert.assertTrue;
  */
 public class ProductSupplierTest {
 
+    // TODO add test to check if is the same object return alone that in array
+
     private static final int DUMMY_COUNT = 0;
 
     private static final int MOCK_COUNT = 2;

@@ -28,7 +28,7 @@ public class ProductSupplier {
     public static List<Product> getBeers(int quantity) {
         List<Product> beers = new ArrayList<>();
         for (int i = 0; i < quantity; i++) {
-            beers.add(new Product(0, 2, Product.Type.COLD));
+            beers.add(new Product(1, 2, Product.Type.COLD));
         }
 
         return beers;
