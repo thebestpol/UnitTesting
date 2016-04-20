@@ -92,8 +92,8 @@ public class SalesOperativeTest {
 
     @Test
     public void shouldShoppingCalculatorProcessBasketAndApplySadPartyPromotion() {
-        List<Product> mockProducts = ProductSupplier.getColas(4);
-        mockProducts.addAll(ProductSupplier.getChips(2));
+        List<Product> mockProducts = ProductSupplier.getColas(SadPartyPromotionApplicator.PROMOTION_COLA_QUANTITY);
+        mockProducts.addAll(ProductSupplier.getChips(SadPartyPromotionApplicator.PROMOTION_CHIPS_QUANTITY));
         Product mockProduct = new Product(0, MOCK_AMOUNT, Product.Type.HOT);
         mockProducts.add(mockProduct);
         Basket mockBasket = new Basket(mockProducts);
@@ -136,5 +136,19 @@ public class SalesOperativeTest {
         double amount = ShoppingCalculator.processBasket(mockBasket);
 
         assertEquals(PartyPizzaPromotionApplicator.PROMOTION_AMOUNT + MOCK_AMOUNT, amount, DELTA);
+    }
+
+    @Test
+    public void shouldShoppingCalculatorApplySadPartyAndPartyPizzaPromotionsO() {
+        List<Product> mockProducts = ProductSupplier.getColas(SadPartyPromotionApplicator.PROMOTION_COLA_QUANTITY);
+        mockProducts.addAll(ProductSupplier.getChips(SadPartyPromotionApplicator.PROMOTION_CHIPS_QUANTITY));
+        mockProducts.addAll(ProductSupplier.getBeers(PartyPizzaPromotionApplicator.PROMOTION_BEER_QUANTITY));
+        mockProducts.addAll(ProductSupplier.getPizzas(PartyPizzaPromotionApplicator.PROMOTION_PIZZA_QUANTITY));
+        Basket mockBasket = new Basket(mockProducts);
+
+        double amount = ShoppingCalculator.processBasket(mockBasket);
+
+        assertEquals(SadPartyPromotionApplicator.PROMOTION_AMOUNT + PartyPizzaPromotionApplicator.PROMOTION_AMOUNT, amount,
+                DELTA);
     }
 }
