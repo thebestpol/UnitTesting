@@ -1,5 +1,6 @@
 package com.kata.unittesting;
 
+import com.kata.unittesting.promotion.MultipleProductPromotionApplicator;
 import com.kata.unittesting.promotion.PartyPizzaPromotionApplicator;
 import com.kata.unittesting.promotion.SadPartyPromotionApplicator;
 
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
- * <p/>
+ * <p>
  * Here we will test the sales operative collaborators, know as sociable tests
  */
 public class SalesOperativeTest {
@@ -149,6 +150,17 @@ public class SalesOperativeTest {
         double amount = ShoppingCalculator.processBasket(mockBasket);
 
         assertEquals(SadPartyPromotionApplicator.PROMOTION_AMOUNT + PartyPizzaPromotionApplicator.PROMOTION_AMOUNT, amount,
+                DELTA);
+    }
+
+    @Test
+    public void shouldShoppingCalculatorApplyMultipleProductPromotion() {
+        List<Product> mockProducts = ProductSupplier.getColas(MultipleProductPromotionApplicator.PROMOTION_REQUIRED_QUANTITY);
+        Basket basket = new Basket(mockProducts);
+
+        double amount = ShoppingCalculator.processBasket(basket);
+
+        assertEquals(ProductSupplier.getCola().getPrice() * MultipleProductPromotionApplicator.PROMOTION_PAY_QUANTITY, amount,
                 DELTA);
     }
 }

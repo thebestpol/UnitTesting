@@ -1,5 +1,6 @@
 package com.kata.unittesting;
 
+import com.kata.unittesting.promotion.MultipleProductPromotionApplicator;
 import com.kata.unittesting.promotion.PartyPizzaPromotionApplicator;
 import com.kata.unittesting.promotion.SadPartyPromotionApplicator;
 
@@ -16,6 +17,7 @@ public class ShoppingCalculator {
         if (basket == null) {
             throw new IllegalArgumentException(CAN_T_BE_CALCULATED_A_NULL_BASKET);
         }
+
         double amount = 0;
 
         SadPartyPromotionApplicator sadPartyPromotionApplicator = new SadPartyPromotionApplicator(basket.getContent());
@@ -29,7 +31,13 @@ public class ShoppingCalculator {
             amount += partyPizzaPromotionApplicator.getPromotionAmount();
         }
 
-        List<Product> shoppingContent = partyPizzaPromotionApplicator.getProducts();
+        MultipleProductPromotionApplicator multipleProductPromotionApplicator = new MultipleProductPromotionApplicator(
+                partyPizzaPromotionApplicator.getProducts());
+        while (multipleProductPromotionApplicator.process()) {
+            amount += multipleProductPromotionApplicator.getPromotionAmount();
+        }
+
+        List<Product> shoppingContent = multipleProductPromotionApplicator.getProducts();
         for (Product product : shoppingContent) {
             amount += product.getPrice();
         }

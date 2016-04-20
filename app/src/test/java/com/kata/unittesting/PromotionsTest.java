@@ -1,5 +1,6 @@
 package com.kata.unittesting;
 
+import com.kata.unittesting.promotion.MultipleProductPromotionApplicator;
 import com.kata.unittesting.promotion.PartyPizzaPromotionApplicator;
 import com.kata.unittesting.promotion.PromotionApplicator;
 import com.kata.unittesting.promotion.SadPartyPromotionApplicator;
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * PromotionsTest
- * <p/>
+ * <p>
  * Here we will put de solitary test for all PromotionApplicators
  */
 public class PromotionsTest {
@@ -75,7 +76,7 @@ public class PromotionsTest {
     }
 
     @Test
-    public void shouldpartyPizzsaPromotionApplicatorReturnNotPromotionProducts() {
+    public void shouldPartyPizzaPromotionApplicatorReturnNotPromotionProducts() {
         List<Product> products = ProductSupplier.getBeers(PartyPizzaPromotionApplicator.PROMOTION_BEER_QUANTITY);
         products.addAll(ProductSupplier.getPizzas(PartyPizzaPromotionApplicator.PROMOTION_PIZZA_QUANTITY));
         Product mockProduct = new Product();
@@ -86,5 +87,36 @@ public class PromotionsTest {
 
         assertEquals(1, partyPizzaPromotionApplicator.getProducts().size());
         assertEquals(mockProduct, partyPizzaPromotionApplicator.getProducts().get(0));
+    }
+
+    @Test
+    public void shouldMultiplePromotionApplicatorReturnTrueWhenApplyPromotion() {
+        List<Product> mockProduct = ProductSupplier.getColas(MultipleProductPromotionApplicator.PROMOTION_REQUIRED_QUANTITY);
+
+        PromotionApplicator multipleProductPromotionApplicator = new MultipleProductPromotionApplicator(
+                mockProduct);
+
+        assertTrue(multipleProductPromotionApplicator.process());
+    }
+
+    @Test
+    public void shouldMultiplePromotionApplicatorReturnProductsNotApplied() {
+        List<Product> mockProduct = ProductSupplier.getColas(MultipleProductPromotionApplicator.PROMOTION_REQUIRED_QUANTITY - 1);
+
+        PromotionApplicator multipleProductPromotionApplicator = new MultipleProductPromotionApplicator(
+                mockProduct);
+
+        assertFalse(multipleProductPromotionApplicator.process());
+    }
+
+    @Test
+    public void shouldMultiplePromotionApplicatorReturnFalseWhenCanNotApplyPromotion() {
+        List<Product> mockProduct = ProductSupplier.getColas(MultipleProductPromotionApplicator.PROMOTION_REQUIRED_QUANTITY + 1);
+
+        PromotionApplicator multipleProductPromotionApplicator = new MultipleProductPromotionApplicator(
+                mockProduct);
+        multipleProductPromotionApplicator.process();
+
+        assertEquals(1, multipleProductPromotionApplicator.getProducts().size());
     }
 }
