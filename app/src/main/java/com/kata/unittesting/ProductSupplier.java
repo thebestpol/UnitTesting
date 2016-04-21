@@ -13,7 +13,7 @@ public class ProductSupplier {
     }
 
     public static List<Product> getColas(int quantity) {
-        List<Product> colas = new ArrayList<>();
+        List<Product> colas = new ArrayList<>(quantity);
         for (int i = 0; i < quantity; i++) {
             colas.add(new Product(0, 1.5, Product.Type.COLD));
         }
@@ -26,7 +26,7 @@ public class ProductSupplier {
     }
 
     public static List<Product> getBeers(int quantity) {
-        List<Product> beers = new ArrayList<>();
+        List<Product> beers = new ArrayList<>(quantity);
         for (int i = 0; i < quantity; i++) {
             beers.add(new Product(1, 2, Product.Type.COLD));
         }
@@ -39,7 +39,7 @@ public class ProductSupplier {
     }
 
     public static List<Product> getCoffees(int quantity) {
-        List<Product> coffees = new ArrayList<>();
+        List<Product> coffees = new ArrayList<>(quantity);
         for (int i = 0; i < quantity; i++) {
             coffees.add(new Product(2, 1.25, Product.Type.HOT));
         }
@@ -52,7 +52,7 @@ public class ProductSupplier {
     }
 
     public static List<Product> getChips(int quantity) {
-        List<Product> chips = new ArrayList<>();
+        List<Product> chips = new ArrayList<>(quantity);
         for (int i = 0; i < quantity; i++) {
             chips.add(new Product(3, 1.75, Product.Type.COLD));
         }
@@ -65,7 +65,7 @@ public class ProductSupplier {
     }
 
     public static List<Product> getSandwiches(int quantity) {
-        List<Product> sandwiches = new ArrayList<>();
+        List<Product> sandwiches = new ArrayList<>(quantity);
         for (int i = 0; i < quantity; i++) {
             sandwiches.add(new Product(4, 2.25, Product.Type.COLD));
         }
@@ -78,7 +78,7 @@ public class ProductSupplier {
     }
 
     public static List getPizzas(int quantity) {
-        List<Product> pizzas = new ArrayList<>();
+        List<Product> pizzas = new ArrayList<>(quantity);
         for (int i = 0; i < quantity; i++) {
             pizzas.add(new Product(5, 4.5, Product.Type.HOT));
         }

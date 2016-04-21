@@ -3,6 +3,7 @@ package com.kata.unittesting;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -12,8 +13,6 @@ import static org.junit.Assert.assertTrue;
  * ProductSupplierTest
  */
 public class ProductSupplierTest {
-
-    // TODO add test to check if is the same object return alone that in array
 
     private static final int DUMMY_COUNT = 0;
 
@@ -36,6 +35,16 @@ public class ProductSupplierTest {
     }
 
     @Test
+    public void shouldProductSupplierReturnOnlyColasWhenRequestColas() {
+        Product cola = ProductSupplier.getCola();
+        List<Product> colas = ProductSupplier.getColas(MOCK_COUNT);
+
+        int frequency = Collections.frequency(colas, cola);
+
+        assertEquals(MOCK_COUNT, frequency);
+    }
+
+    @Test
     public void shouldProductSupplierReturnRequestedColasQuantity() {
         List requestedSupplies = ProductSupplier.getColas(MOCK_COUNT);
 
@@ -47,6 +56,16 @@ public class ProductSupplierTest {
         Object requestedSupply = ProductSupplier.getBeer();
 
         assertTrue(requestedSupply instanceof Product);
+    }
+
+    @Test
+    public void shouldProductSupplierReturnOnlyBeersWhenRequestBeers() {
+        Product beer = ProductSupplier.getBeer();
+        List<Product> beers = ProductSupplier.getBeers(MOCK_COUNT);
+
+        int frequency = Collections.frequency(beers, beer);
+
+        assertEquals(MOCK_COUNT, frequency);
     }
 
     @Test
@@ -93,6 +112,16 @@ public class ProductSupplierTest {
     }
 
     @Test
+    public void shouldProductSupplierReturnOnlyCoffeesWhenRequestCoffees() {
+        Product coffee = ProductSupplier.getCoffee();
+        List<Product> coffees = ProductSupplier.getCoffees(MOCK_COUNT);
+
+        int frequency = Collections.frequency(coffees, coffee);
+
+        assertEquals(MOCK_COUNT, frequency);
+    }
+
+    @Test
     public void shouldProductSupplierReturnRequestedCoffeesQuantity() {
         List requestedSupplies = ProductSupplier.getCoffees(MOCK_COUNT);
 
@@ -111,6 +140,16 @@ public class ProductSupplierTest {
         List requestedSupplies = ProductSupplier.getChips(DUMMY_COUNT);
 
         assertEquals(isProductList(), requestedSupplies);
+    }
+
+    @Test
+    public void shouldProductSupplierReturnOnlyChipsWhenRequestChips() {
+        Product chip = ProductSupplier.getChips();
+        List<Product> chips = ProductSupplier.getChips(MOCK_COUNT);
+
+        int frequency = Collections.frequency(chips, chip);
+
+        assertEquals(MOCK_COUNT, frequency);
     }
 
     @Test
@@ -135,6 +174,16 @@ public class ProductSupplierTest {
     }
 
     @Test
+    public void shouldProductSupplierReturnOnlySandwichesWhenRequestSandwiches() {
+        Product sandwich = ProductSupplier.getSandwich();
+        List<Product> sandwiches = ProductSupplier.getSandwiches(MOCK_COUNT);
+
+        int frequency = Collections.frequency(sandwiches, sandwich);
+
+        assertEquals(MOCK_COUNT, frequency);
+    }
+
+    @Test
     public void shouldProductSupplierReturnRequestedSandwichesQuantity() {
         List requestedSupplies = ProductSupplier.getSandwiches(MOCK_COUNT);
 
@@ -153,6 +202,16 @@ public class ProductSupplierTest {
         List requestedSupplies = ProductSupplier.getPizzas(DUMMY_COUNT);
 
         assertEquals(isProductList(), requestedSupplies);
+    }
+
+    @Test
+    public void shouldProductSupplierReturnOnlyPizzasWhenRequestPizzas() {
+        Product pizza = ProductSupplier.getSandwich();
+        List<Product> pizzas = ProductSupplier.getSandwiches(MOCK_COUNT);
+
+        int frequency = Collections.frequency(pizzas, pizza);
+
+        assertEquals(MOCK_COUNT, frequency);
     }
 
     @Test
