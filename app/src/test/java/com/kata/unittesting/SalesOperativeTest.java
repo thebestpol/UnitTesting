@@ -26,6 +26,8 @@ public class SalesOperativeTest {
 
     private static final double MOCK_AMOUNT = 2.5;
 
+    private static final int MOCK_ID = 420;
+
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
@@ -162,5 +164,55 @@ public class SalesOperativeTest {
 
         assertEquals(ProductSupplier.getCola().getPrice() * MultipleProductPromotionApplicator.PROMOTION_PAY_QUANTITY, amount,
                 DELTA);
+    }
+
+    @Test
+    public void shouldBasketShoppingCalculatorProcessBasketAndApplyMultipleProductPromotion() {
+        List<Product> mockProducts = ProductSupplier.getColas(MultipleProductPromotionApplicator.PROMOTION_REQUIRED_QUANTITY);
+        Product mockProduct = new Product(0, MOCK_AMOUNT, Product.Type.HOT);
+        mockProducts.add(mockProduct);
+        Basket basket = new Basket(mockProducts);
+
+        double amount = ShoppingCalculator.processBasket(basket);
+
+        double expectedAmount = ProductSupplier.getCola().getPrice() * MultipleProductPromotionApplicator.PROMOTION_PAY_QUANTITY
+                + MOCK_AMOUNT;
+        assertEquals(expectedAmount, amount, DELTA);
+    }
+
+    @Test
+    public void shouldBasketShoppingCalculatorApplyAllPromotions() {
+        List<Product> mockProducts = ProductSupplier.getColas(MultipleProductPromotionApplicator.PROMOTION_REQUIRED_QUANTITY);
+        mockProducts.addAll(ProductSupplier.getColas(SadPartyPromotionApplicator.PROMOTION_COLA_QUANTITY));
+        mockProducts.addAll(ProductSupplier.getChips(SadPartyPromotionApplicator.PROMOTION_CHIPS_QUANTITY));
+        mockProducts.addAll(ProductSupplier.getBeers(PartyPizzaPromotionApplicator.PROMOTION_BEER_QUANTITY));
+        mockProducts.addAll(ProductSupplier.getPizzas(PartyPizzaPromotionApplicator.PROMOTION_PIZZA_QUANTITY));
+        Basket basket = new Basket(mockProducts);
+
+        double amount = ShoppingCalculator.processBasket(basket);
+
+        double expectedAmount =
+                ProductSupplier.getCola().getPrice() * MultipleProductPromotionApplicator.PROMOTION_PAY_QUANTITY
+                        + SadPartyPromotionApplicator.PROMOTION_AMOUNT + PartyPizzaPromotionApplicator.PROMOTION_AMOUNT;
+        assertEquals(expectedAmount, amount, DELTA);
+    }
+
+    @Test
+    public void shouldBasketShoppingCalculatorProcessBasketApplyAllPromotions() {
+        List<Product> mockProducts = ProductSupplier.getColas(MultipleProductPromotionApplicator.PROMOTION_REQUIRED_QUANTITY);
+        mockProducts.addAll(ProductSupplier.getColas(SadPartyPromotionApplicator.PROMOTION_COLA_QUANTITY));
+        mockProducts.addAll(ProductSupplier.getChips(SadPartyPromotionApplicator.PROMOTION_CHIPS_QUANTITY));
+        mockProducts.addAll(ProductSupplier.getBeers(PartyPizzaPromotionApplicator.PROMOTION_BEER_QUANTITY));
+        mockProducts.addAll(ProductSupplier.getPizzas(PartyPizzaPromotionApplicator.PROMOTION_PIZZA_QUANTITY));
+        mockProducts.add(new Product(MOCK_ID, MOCK_AMOUNT, Product.Type.HOT));
+        Basket basket = new Basket(mockProducts);
+
+        double amount = ShoppingCalculator.processBasket(basket);
+        double expectedAmount =
+                ProductSupplier.getCola().getPrice() * MultipleProductPromotionApplicator.PROMOTION_PAY_QUANTITY
+                        + SadPartyPromotionApplicator.PROMOTION_AMOUNT + PartyPizzaPromotionApplicator.PROMOTION_AMOUNT
+                        + MOCK_AMOUNT;
+        assertEquals(expectedAmount, amount, DELTA);
+
     }
 }
